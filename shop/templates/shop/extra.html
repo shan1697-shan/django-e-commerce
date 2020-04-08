@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+      <div class="container">
+    <div class="row">
+      <h1 style="margin-left: 30%;">All Products are Here</h1><br>
+      {%for prod in allprod %}
+      <div class="col-lg-5" style="box-shadow: 5px 10px #888888; border:1px solid; margin-bottom: 15px;">
+        <label>Product Id:</label>
+        <p>{{prod.product_id}}</p>
+        <label>Product Name:</label>
+        <p>{{prod.product_name}}</p>
+        <label>Product Description:</label>
+        <p>{{prod.desc}}</p>
+        <label>Product Category:</label>
+        <p>{{prod.category}}</p>
+        <label>Publish Date:</label>
+        <p>{{prod.pub_date}}</p>
+        <label>Product Image:</label>
+        <img src="{{MEDIA_URL}}{{ prod.image }}">
+      </div>
+      <div class="col-lg-1">
+
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</body>
+</html>
+
+removeempty(cart);
+function removeempty(cart){
+  for(var item in cart){
+    //console.log(cart[item]);
+    if (cart[item]==0){
+      var i = item.slice(2,5);
+      console.log(i);
+      console.log(cart[item]);
+      localStorage.removeItem("cart");
+      //console.log(item)
+    }
+  }
+  update(cart);
+  updatepopover(cart);
+  console.log(cart);
+}

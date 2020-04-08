@@ -1,0 +1,81 @@
+{%extends 'shop/basic.html'%}
+
+{% block titles%} Contact Us {% endblock %}
+
+{% block body%}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+
+        </div>
+
+        <div class="col-lg-8 col-md-8 contact-form-txt">
+            <h3>Contact Us</h3>
+            <form action="/shop/contact/" method="POST">{% csrf_token%}
+              <div class="w3pvt-wls-contact-mid">
+                <div class="form-group contact-forms">
+                    <label for="name">Name:</label><br>
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Name" required="">
+                </div>
+                <div class="form-group contact-forms">
+                    <label for="email">Email:</label><br>
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Email" required="">
+                </div>
+                <div class="form-group contact-forms">
+                    <label for="phone">Phone Number:</label><br>
+                  <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone" required="">
+                </div>
+                <div class="form-group contact-forms">
+                    <label for="msg">Your Message:</label><br>
+                  <textarea class="form-control" id="msg" placeholder="Message" name="msg" rows="3" required=""></textarea>
+                </div>
+                <input  type="submit"  name ="submit" class="btn btn-success" value="send">
+              </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+if (localStorage.getItem('cart') == null) {
+    var cart = {};
+}
+else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    var sum = 0;
+    for (var item in cart){
+    sum += cart[item][0];
+    }
+    document.getElementById('cart').innerHTML = sum;
+    updatepopover(cart);
+}
+function updatepopover(cart){
+  var popstr="";
+  popstr = popstr + "<div class='mx-2 my-2'>";
+  var i=1;
+  for(var item in cart){
+    var check = cart[item];
+    if (check !='0'){
+      popstr = popstr + "<b>" + i + ". </b>";
+      popstr = popstr + cart[item][1].slice(0,20) +"... Qty: " + cart[item][0] + "<br>";
+      i =i +1;
+   }
+
+  }
+  popstr = popstr + '</div> <a href="/shop/checkout/"><button class="btn btn-primary" id="checkout">CheckOut</button></a>  <button class="btn btn-primary" onclick="clearcart()" id="clearcart">Clear Cart</button>';
+  document.getElementById("pcart").setAttribute("data-content", popstr);
+  $("#pcart").popover('show');
+}
+function clearcart(){
+  cart = JSON.parse(localStorage.getItem('cart'));
+  localStorage.clear();
+  cart={};
+ }
+    {% if thank %}
+alert('Thanks for contacting us. We will be with you soon!!');
+document.location = "/shop/contact";
+{% endif %}
+</script>
+{% endblock %}

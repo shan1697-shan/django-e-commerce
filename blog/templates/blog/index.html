@@ -1,0 +1,37 @@
+{% extends 'blog/basic.html' %}
+{% block titles%} Home Blog {% endblock %}
+
+{% block body %}
+    <div class="alert alert-primary" role="alert">
+        Welcome to the <a href="/blog" class="alert-link">Blog Today</a>. Give it a click if you like.
+    </div>
+
+
+    <div class="container">
+        <div class="row mb-2">
+            {% for item in allblog %}
+    <div class="col-md-6">
+      <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">{{item.postedby}}</strong>
+          <h3 class="mb-0">{{item.title}}</h3>
+          <div class="mb-1 text-muted">{{item.pub_date}}</div>
+          <h4 class="mb-0">{{item.head0}}</h4>
+          <p class="card-text mb-auto">{{item.chead0}}</p>
+          <a href="blogpost/{{item.post_id}}" class="stretched-link">Continue reading</a>
+        </div>
+        <div class="col-auto d-none d-lg-block">
+         <title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em"><img src="/media/{{item.thumbnail}}" style="width:200px; height:250px;"></text>
+        </div>
+      </div>
+    </div>
+            {% if forloop.counter|divisibleby:2 %}
+  </div><div class="row mb-2">
+    {% endif %}
+        {% endfor %}
+    </div>
+
+{% endblock %}
+     <!-- {% load static %}
+    <a href="{%static 'blog/text.txt'%}">Click Here!!</a><br>
+      <img src="{%static 'blog/download.jpg' %}">-->

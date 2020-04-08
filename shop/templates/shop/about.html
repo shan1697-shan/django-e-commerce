@@ -1,0 +1,81 @@
+{%extends 'shop/basic.html'%}
+
+{% block titles%} About Us {% endblock %}
+
+{% block body%}
+<main role="main">
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-3">My Awesome Cart</h1>
+      <p>My Awesome Cart is an American multinational retail corporation that operates a chain of hypermarkets, discount department stores, and grocery stores, headquartered in Bentonville, Arkansas. [8] The company was founded by Sam Walton in 1962 and incorporated on October 31, 1969. It also owns and operates Sam's Club retail warehouses.[9][10] As of January 31, 2020, Walmart has 11,503 stores and clubs in 27 countries, operating under 55 different names.[1][2][11] The company operates under the name Walmart in the United States and Canada, as Walmart de México y Centroamérica in Mexico and Central America, as Asda in the United Kingdom, as the Seiyu Group in Japan, and as Best Price in India. It has wholly owned operations in Argentina, Chile, Canada, and South Africa. Since August 2018, Walmart only holds a minority stake in Walmart Brasil, which was renamed Grupo Big in August 2019, with 20 percent of the company's shares, and private equity firm Advent Internati
+          onal holding 80 percent ownership of the company.</p>
+      <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+      <div class="col-md-4">
+        <h2>Heading</h2>
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+      </div>
+      <div class="col-md-4">
+        <h2>Heading</h2>
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+      </div>
+      <div class="col-md-4">
+        <h2>Heading</h2>
+        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+      </div>
+    </div>
+
+    <hr>
+
+  </div> <!-- /container -->
+
+</main>
+{% endblock %}
+{% block js %}
+<script>
+if (localStorage.getItem('cart') == null) {
+    var cart = {};
+}
+else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    var sum = 0;
+    for (var item in cart){
+    sum += cart[item][0];
+    }
+    document.getElementById('cart').innerHTML = sum;
+    updatepopover(cart);
+}
+function updatepopover(cart){
+  var popstr="";
+  popstr = popstr + "<div class='mx-2 my-2'>";
+  var i=1;
+  for(var item in cart){
+    var check = cart[item];
+    if (check !='0'){
+      popstr = popstr + "<b>" + i + ". </b>";
+      popstr = popstr + cart[item][1].slice(0,20) +"... Qty: " + cart[item][0] + "<br>";
+      i =i +1;
+   }
+
+  }
+  popstr = popstr + '</div> <a href="/shop/checkout/"><button class="btn btn-primary" id="checkout">CheckOut</button></a>  <button class="btn btn-primary" onclick="clearcart()" id="clearcart">Clear Cart</button>';
+  document.getElementById("pcart").setAttribute("data-content", popstr);
+  $("#pcart").popover('show');
+}
+function clearcart(){
+  cart = JSON.parse(localStorage.getItem('cart'));
+  localStorage.clear();
+  cart={};
+ }
+ </script>
+{% endblock %}
